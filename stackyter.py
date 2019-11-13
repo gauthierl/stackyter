@@ -8,7 +8,7 @@ import subprocess
 from argparse import ArgumentParser
 from argparse import ArgumentDefaultsHelpFormatter
 import yaml
-import numpy as np
+import random 
 
 
 DEFAULT_CONFIG = os.getenv("HOME") + "/.stackyter-config.yaml"
@@ -151,7 +151,7 @@ if __name__ == '__main__':
 
     # A random port number is selected between 1025 and 65635 (included) for server side to
     # prevent from conflict between users.
-    port = np.random.randint(1025, high=65635)
+    port = random.randint(1025, 65635)
 
     # Start building the command line that will be launched on the host
     # Open the ssh tunnel to the host
