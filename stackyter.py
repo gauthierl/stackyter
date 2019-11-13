@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Run jupyter on a given host and display it localy."""
 
+from __future__ import print_function
 
 import os
 import sys
@@ -130,7 +131,12 @@ if __name__ == '__main__':
         sys.exit(0)
 
     # Do we have a configuration file
-    config = get_config(args.config, args.configfile)
+    try:
+        config = get_config(args.config, args.configfile)
+    except Exception as exception:
+        print('ERROR: ' + str(exception), file=sys.stderr)
+        sys.exit(2)
+
     if config is not None:
         for opt, val in args._get_kwargs():
             # only keep option value from the config file
@@ -140,7 +146,8 @@ if __name__ == '__main__':
 
     # Do we have a valide host name
     if args.host is None:
-        raise ValueError("You must give a valide host name (--host)")
+        print("ERROR: You must give a valide host name (--host)", file=sys.stderr)
+        sys.exit(2)
 
     # Do we have a valid username
     args.username = "" if args.username is None else args.username + "@"
